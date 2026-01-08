@@ -1,0 +1,16 @@
+services:
+  rates-service:
+    build: ./rates-service
+    container_name: rates-service
+    ports:
+      - "5001:5001"
+
+  converter-service:
+    build: ./converter-service
+    container_name: converter-service
+    environment:
+      - RATES_URL=http://rates-service:5001
+    depends_on:
+      - rates-service
+    ports:
+      - "5000:5000"
